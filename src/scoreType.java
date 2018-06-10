@@ -1,4 +1,3 @@
-import java.util.ArrayList;
 import java.util.Collections;
 
 public class scoreType {
@@ -15,7 +14,7 @@ public class scoreType {
 					return scoreBoard.flush.ordinal();
 				}
 			}
-			else if (rawCandi.isValueSame()) {
+			else if (rawCandi.isValueStraight()) {
 				return scoreBoard.straight.ordinal();
 			}
 			else return -1;
@@ -26,7 +25,19 @@ public class scoreType {
 			}
 			else return -1;
 		}
-		return true;
+		if (rawCandi.size() == 3) {
+			if (rawCandi.isValueSame()) {
+				return scoreBoard.triple.ordinal();
+			}
+			else return -1;
+		}
+		if (rawCandi.size() == 2) {
+			if (rawCandi.isValueSame()) {
+				return scoreBoard.pair.ordinal();
+			}
+			else return -1;
+		}
+		return -1;
 	}
 	
 }

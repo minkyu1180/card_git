@@ -1,3 +1,4 @@
+import javax.management.DescriptorKey;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -31,10 +32,16 @@ class fieldCard{
 	void add(TrumpCard DrawedCard) {
 		hand.add(DrawedCard);
 	}
-	boolean register(ArrayList<TrumpCard> candidate) {
-		Score_candi rawCandi = new Score_candi(candidate);
-		scoreType.validate(rawCandi) // 점수 검증
-		
+	boolean register(ArrayList<TrumpCard> candidate, int myScore) {
+		Score_candi rawCandi = new Score_candi();
+		rawCandi = (Score_candi) candidate;
+		int ScoredScore = 0;
+		ScoredScore = scoreType.validate(rawCandi); // 점수 검증
+		if (ScoredScore != -1) {
+			myScore += ScoredScore;
+			return true;
+		}
+		return false;
 	}
 }
 
@@ -62,67 +69,38 @@ class prediction{
 
 public class MainFrame {
 	JFrame mainframe;
-	JPanel opScore;
-	JPanel opField;
-	JPanel midArea;
-	JPanel myField;
-	JPanel myScore;
-	maindeck mid;
-	
+
+	int myScore;
+	int opScore;
+	TrumpsDeck gameTrump;
+	fieldCard myFieldCard;
+	fieldCard opFiledCard;
 	
 	MainFrame(){
-		mainframe = new JFrame();
-		mid = new maindeck();
-		opScore = new JPanel();
-		opField = new JPanel();
-		midArea = new JPanel();
-		myField = new JPanel();
-		myScore = new JPanel();
-		
-		Random rand = new Random();
-		Color fieldColor = new Color(rand.nextInt(256),rand.nextInt(256),rand.nextInt(256));
-		Color ScoreColor = new Color(rand.nextInt(256),rand.nextInt(256),rand.nextInt(256));
-		
-		mainframe.setSize(1200,800);
-		mainframe.setLayout(new GridLayout(5,1));
-		opScore.setBackground(ScoreColor);
-		myScore.setBackground(ScoreColor);
-		myField.setBackground(fieldColor);
-		opField.setBackground(fieldColor);
-		mainframe.add(opScore);
-		mainframe.add(opField);
-		mainframe.add(midArea);
-		mainframe.add(myField);
-		mainframe.add(myScore);
-		
-		midArea.add(mid);
-		midArea.setVisible(true);
-		midArea.setName("MID");
-		
-		
-		mid.setFocusable(false);
-		mid.setVisible(true);
-		mid.setBorderPainted(false);
-		mid.setFocusPainted(false);
-		mid.setContentAreaFilled(false);
-		mid.setIcon(new ImageIcon("./CARD_LIST/back.png"));
-		mid.setIconTextGap(0);
-		System.out.print(mid.getIconTextGap());
-		
-		mainframe.setVisible(true);
+		myScore = 0;
+		opScore  = 0;
+		gameTrump = new TrumpsDeck();
+		myFieldCard = new fieldCard();
+		opFiledCard = new fieldCard();
 	}
 	
 	
 	// predict Phase
-	void predictPhase() {
-		//prdictframe으로 prediction을 받음.
+	void predictPhase(int turnplayer) {
+		//prdictframe으로 prediction을 받음. 
 		prediction predic = new prediction(1,2,3);
 	}
 	// draw Phase
-	void drawPhase() {
+	void drawPhase(int turnplayer) {
 		
 	}
 	// effect Phase
+	void effectPhase(int turnplayer) {
+		
+	}
+	void scorePhase(int turnplayer) {
+		
+	}
 	// score Phase
 	
 }
